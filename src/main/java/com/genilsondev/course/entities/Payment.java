@@ -1,8 +1,8 @@
 package com.genilsondev.course.entities;
 
+
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_payment")
 public class Payment implements Serializable {
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private Instant moment;
 
 	@OneToOne
@@ -27,21 +27,20 @@ public class Payment implements Serializable {
 	private Order order;
 
 	public Payment() {
-
 	}
 
-	public Payment(long id, Instant moment, Order order) {
+	public Payment(Long id, Instant moment, Order order) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		this.order = order;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -63,7 +62,10 @@ public class Payment implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -75,9 +77,11 @@ public class Payment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Payment other = (Payment) obj;
-		return id == other.id;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
-	
-
 }
